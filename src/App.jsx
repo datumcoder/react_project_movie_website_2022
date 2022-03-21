@@ -1,49 +1,62 @@
-import "./App.css";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
 import SearchIcon from "./search.svg";
 import MovieCard from "./movieCard";
+import "./App.css";
 
 const API_URL = "https://www.omdbapi.com?apikey=111f9341";
 
-const movie1 = {
-    
-    Title: "The Shawshank Redemption",
-    Year: "1994",
-    imdbID: "tt0111161",
-    Type: "movie",
-    Poster: "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-};
-  
 const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
-  
 
-    console.log(data.Search);
+    setMovies(data.Search);
   };
 
   useEffect(() => {
-    searchMovies("The shawshank redemption");
+    searchMovies("war");
   }, []);
+
 
   return (
     <div className="app">
-      <h1>Movies N Chill</h1>
+      <h1>Movie Posters</h1>
 
       <div className="search">
         <input
-          placeholder="Search for movies here..."
-          value="Superman"
-          onChange={() => {}}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeypress={(e) => setSearchTerm(e.target.value)}
+          
+          placeholder="Search for movie posters here..."
         />
 
-        <img src={SearchIcon} alt="search" onClick={() => {}} />
+        <img
+          src={SearchIcon}
+          alt="search"
+          onClick={() => searchMovies(searchTerm)}
+          
+        />
+        
       </div>
 
-      <div className="container">
-      <MovieCard movie1={movie1} />
-      </div>
+      {movies?.length > 0 ? (
+        <div className="container">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty">
+          <h2>No Movies</h2>
+        </div>
+      )}
+
+      
     </div>
   );
 };
