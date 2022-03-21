@@ -1,16 +1,19 @@
 import "./App.css";
 import { useEffect } from "react";
 import SearchIcon from "./search.svg";
+import MovieCard from "./movieCard";
 
 const API_URL = "https://www.omdbapi.com?apikey=111f9341";
-  const movie_1 = {
+
+const movie1 = {
+    
     Title: "The Shawshank Redemption",
     Year: "1994",
     imdbID: "tt0111161",
     Type: "movie",
-    Poster:
-      "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-  };
+    Poster: "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+};
+  
 const App = () => {
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
@@ -39,19 +42,7 @@ const App = () => {
       </div>
 
       <div className="container">
-        <div className="movie">
-          <div>
-            <p>
-              {movie_1.Year}
-            </p>
-          </div>
-          <div>
-            <img
-              src={movie_1.Poster} alt="movie_1.Title">
-              
-              </img>
-          </div>
-        </div>
+      <MovieCard movie1={movie1} />
       </div>
     </div>
   );
