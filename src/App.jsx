@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import SearchIcon from "./search.svg";
 import MovieCard from "./movieCard";
+
 import "./App.css";
 
 const API_URL = "https://www.omdbapi.com?apikey=111f9341";
@@ -18,20 +19,18 @@ const App = () => {
   };
 
   useEffect(() => {
-    searchMovies("war");
+    searchMovies("computer");
   }, []);
-
 
   return (
     <div className="app">
       <h1>Movie Posters</h1>
-
       <div className="search">
         <input
+          id="enterSearch"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeypress={(e) => setSearchTerm(e.target.value)}
-          
+          onKeyPress={(e) => e.key === "Enter" && searchMovies(searchTerm)}
           placeholder="Search for movie posters here..."
         />
 
@@ -39,9 +38,7 @@ const App = () => {
           src={SearchIcon}
           alt="search"
           onClick={() => searchMovies(searchTerm)}
-          
         />
-        
       </div>
 
       {movies?.length > 0 ? (
@@ -55,8 +52,6 @@ const App = () => {
           <h2>No Movies</h2>
         </div>
       )}
-
-      
     </div>
   );
 };
