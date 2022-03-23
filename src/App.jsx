@@ -26,13 +26,13 @@ const App = () => {
     <div className="app">
       <h1>Movie Posters</h1>
       <div className="search">
-        <input id="enterSearch"
+        <input
+          id="enterSearch"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && searchMovies(searchTerm)}
           placeholder="Search for movie posters here..."
-          
         />
-        
 
         <img
           src={SearchIcon}
